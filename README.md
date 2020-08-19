@@ -2,6 +2,8 @@
 
 ![screenshot](./screenshot.png)
 
+[Screencap on YouTube](https://youtu.be/aEUPRPAZDXE)
+
 ## What?
 This repository contains the source code and ROM for a "game" I put together in
 order to learn more about 6502 Assembly and the NES platform.
@@ -20,7 +22,7 @@ for what writing and NES game is like:
 ## How?
 
 #### Dependencies
-- [cc65](https://www.cc65.org/) toolchain
+- [cc65](https://www.cc65.org/) compiler/toolchain
 - [FCEUX](http://fceux.com/web/home.html) emulator (any emulator should do but this one is assumed)
 - [nestool](https://github.com/jpwhiting/nestool)
 
@@ -30,6 +32,12 @@ The default make target will compile and link the source files and generate a
 ROM file.
 ##### `make run`
 The `run` make target will build the ROM and open it in the FCEUX emulator
+
+## TODO
+- add sound effect(s)
+- add button press counters
+- add start screen
+- experiment with scrolling/interactive background
 
 ## Resources
 The souce code borrows _HEAVILY_ from Famicom Party and Zero Pages. Famicom
