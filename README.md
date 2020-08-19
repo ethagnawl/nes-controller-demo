@@ -50,6 +50,8 @@ preferences regarding credits or licensing, please let me know and I'll be
 happy to accommodate you!)
 
 - [Famicom Party](https://famicom.party/)
-- [Nerdy Nights](https://nerdy-nights.nes.science/)
+- [Intro to Game Hacking on the NES - HOPE 2020](https://archive.org/details/hopeconf2020/20200731_2300_Intro_to_Game_Hacking_on_the_NES.mp4)
+- [Masswerk 6502 instruction set guide](https://www.masswerk.at/6502/6502_instruction_set.html)
 - [NESDev Wiki](http://wiki.nesdev.com/w/index.php/Nesdev_Wiki)
+- [Nerdy Nights](https://nerdy-nights.nes.science/)
 - [Zero Pages](https://www.youtube.com/watch?v=JgdcGcJga4w&list=PL29OkqO3wUxzOmjc0VKcdiNPqwliHEuEk)
