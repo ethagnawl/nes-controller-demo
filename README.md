@@ -40,14 +40,16 @@ The `run` make target will build the ROM and open it in the FCEUX emulator
 - experiment with scrolling/interactive background
 
 ## Resources
-The souce code borrows _HEAVILY_ from Famicom Party and Zero Pages. Famicom
-Party is released under the Creative Commons
-Attribution-NonCommercial-ShareAlike 4.0 license and Zero Pages does not
-include a license, so this project will be adopting the Famicom Party CC
-license. Full credit to those two authors, where applicable, though. They're
-both excellent resources and this would have taken much longer to put together
-without them.
+The souce code borrows heavily from portions of the Zero Pages and Nerdy Nights
+tutorials. Both appear to be unlicensed, so I've added credits where
+appropriate (setup, memclear, palette and background loading, for Zero Pages
+and controller input handling from Nerdy Nights) These resources and the others
+linked below are very accessible and I highly recommend people give them a
+look. (If any of the authors of the aforementioned tutorials have other
+preferences regarding credits or licensing, please let me know and I'll be
+happy to accommodate you!)
 
 - [Famicom Party](https://famicom.party/)
+- [Nerdy Nights](https://nerdy-nights.nes.science/)
 - [NESDev Wiki](http://wiki.nesdev.com/w/index.php/Nesdev_Wiki)
 - [Zero Pages](https://www.youtube.com/watch?v=JgdcGcJga4w&list=PL29OkqO3wUxzOmjc0VKcdiNPqwliHEuEk)
