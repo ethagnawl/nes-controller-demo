@@ -15,130 +15,131 @@
 background_counter: .res 2
 .segment "STARTUP"
 Reset:
-    SEI ; Disables all interrupts
-    CLD ; disable decimal mode
+  SEI ; Disables all interrupts
+  CLD ; disable decimal mode
 
-    ; Disable sound IRQ
-    LDX #$40
-    STX $4017
+  ; Disable sound IRQ
+  LDX #$40
+  STX $4017
 
-    ; Initialize the stack register
-    LDX #$FF
-    TXS
+  ; Initialize the stack register
+  LDX #$FF
+  TXS
 
-    INX ; #$FF + 1 => #$00
+  INX ; #$FF + 1 => #$00
 
-    ; Zero out the PPU registers
-    STX PPUCTRL
-    STX PPUMASK
+  ; Zero out the PPU registers
+  STX PPUCTRL
+  STX PPUMASK
 
-    STX $4010
+  STX $4010
 
 :
-    BIT PPUSTATUS
-    BPL :-
+  BIT PPUSTATUS
+  BPL :-
 
-    TXA
+  TXA
 
 CLEARMEM:
-    STA $0000, X ; $0000 => $00FF
-    STA $0100, X ; $0100 => $01FF
-    STA $0300, X
-    STA $0400, X
-    STA $0500, X
-    STA $0600, X
-    STA $0700, X
-    LDA #$FF
-    STA $0200, X ; $0200 => $02FF
-    LDA #$00
-    INX
-    BNE CLEARMEM
+  STA $0000, X ; $0000 => $00FF
+  STA $0100, X ; $0100 => $01FF
+  STA $0300, X
+  STA $0400, X
+  STA $0500, X
+  STA $0600, X
+  STA $0700, X
+  LDA #$FF
+  STA $0200, X ; $0200 => $02FF
+  LDA #$00
+  INX
+  BNE CLEARMEM
 ; wait for vblank
 :
-    BIT PPUSTATUS
-    BPL :-
+  BIT PPUSTATUS
+  BPL :-
 
-    LDA #$02
-    STA OAMDMA
-    NOP
+  LDA #$02
+  STA OAMDMA
+  NOP
 
-    ; $3F00
-    LDA #$3F
-    STA PPUADDR
-    LDA #$00
-    STA PPUADDR
+  ; $3F00
+  LDA #$3F
+  STA PPUADDR
+  LDA #$00
+  STA PPUADDR
 
-    LDX #$00
+  LDX #$00
 
 LoadPalettes:
-    LDA PaletteData, X
-    STA PPUDATA ; $3F00, $3F01, $3F02 => $3F1F
-    INX
-    CPX #$20
-    BNE LoadPalettes
+  LDA PaletteData, X
+  STA PPUDATA ; $3F00, $3F01, $3F02 => $3F1F
+  INX
+  CPX #$20
+  BNE LoadPalettes
 
-    ; Initialize background_counter to point to world data
-    LDA #<BackgroundData
-    STA background_counter
-    LDA #>BackgroundData
-    STA background_counter+1
+  ; Initialize background_counter to point to world data
+  LDA #<BackgroundData
+  STA background_counter
+  LDA #>BackgroundData
+  STA background_counter+1
 
-    ; setup address in PPU for nametable data
-    BIT PPUSTATUS
-    LDA #$20
-    STA PPUADDR
-    LDA #$00
-    STA PPUADDR
+  ; setup address in PPU for nametable data
+  BIT PPUSTATUS
+  LDA #$20
+  STA PPUADDR
+  LDA #$00
+  STA PPUADDR
 
-    LDX #$00
-    LDY #$00
+  LDX #$00
+  LDY #$00
+
 LoadBackground:
-    LDA (background_counter), Y
-    STA $2007
-    INY
-    CPX #$03
-    BNE :+
-    CPY #$C0
-    BEQ DoneLoadingBackground
+  LDA (background_counter), Y
+  STA $2007
+  INY
+  CPX #$03
+  BNE :+
+  CPY #$C0
+  BEQ DoneLoadingBackground
 :
-    CPY #$00
-    BNE LoadBackground
-    INX
-    INC background_counter+1
-    JMP LoadBackground
+  CPY #$00
+  BNE LoadBackground
+  INX
+  INC background_counter+1
+  JMP LoadBackground
 
 DoneLoadingBackground:
-    LDX #$00
+  LDX #$00
 
 SetAttributes:
-    LDA #$55
-    STA PPUDATA
-    INX
-    CPX #$40
-    BNE SetAttributes
+  LDA #$55
+  STA PPUDATA
+  INX
+  CPX #$40
+  BNE SetAttributes
 
-    LDX #$00
-    LDY #$00
+  LDX #$00
+  LDY #$00
 
 LoadSprites:
-    LDA SpriteData, X
-    STA $0200, X
-    INX
-    CPX #$28
-    BNE LoadSprites
+  LDA SpriteData, X
+  STA $0200, X
+  INX
+  CPX #$28
+  BNE LoadSprites
 
 ; Enable interrupts
-    CLI
+ CLI
 
-    LDA #%10010000 ; enable NMI change background to use second chr set of tiles ($1000)
-    STA PPUCTRL
-    ; Enabling sprites and background for left-most 8 pixels
-    ; Enable sprites and background
-    LDA #%00011110
-    STA PPUMASK
+ LDA #%10010000 ; enable NMI change background to use second chr set of tiles ($1000)
+ STA PPUCTRL
+ ; Enabling sprites and background for left-most 8 pixels
+ ; Enable sprites and background
+ LDA #%00011110
+ STA PPUMASK
 
 Loop:
-    JMP Loop
+  JMP Loop
 
 NMI:
   LDA #$00
