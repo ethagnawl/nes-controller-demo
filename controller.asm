@@ -1,5 +1,8 @@
 .include "constants.inc"
 
+;; Much of the following setup, memclear, loading routines taken from the
+;; Zero Pages tutorials.
+;; https://github.com/mchiaramonte/helloworld
 .segment "HEADER"
 .byte "NES"
 .byte $1a
@@ -11,8 +14,10 @@
 .byte $00
 .byte $00
 .byte $00, $00, $00, $00, $00 ; filler bytes
+
 .segment "ZEROPAGE" ; LSB 0 - FF
 background_counter: .res 2
+
 .segment "STARTUP"
 Reset:
   SEI ; Disables all interrupts
@@ -164,6 +169,8 @@ NMI:
   LDA #%01000000
   STA RIGHT_BUTTON
 
+;; Controller handling inspired in large part by Nerdy Nights:
+;; https://nerdy-nights.nes.science/#main_tutorial-5
 LatchController:
   LDA #$01
   STA CONTROLLER_A
@@ -251,16 +258,16 @@ BackgroundData:
   .incbin "controller.nam"
 
 SpriteData:
-  .byte $45, $16, $00, $74 ;; b button
-  .byte $45, $16, $00, $84 ;; a button
+  .byte $45, $16, $00, $74        ;;  b button
+  .byte $45, $16, $00, $84        ;;  a button
 
-  .byte $35, $0e, $00, $28        ;; up
-  .byte $46, $0e, %10000000, $28  ;; down
-  .byte $3e, $14, $00, $1e        ;; left
-  .byte $3e, $14, %01000000, $32  ;; right
+  .byte $35, $0e, $00, $28        ;;  up
+  .byte $46, $0e, %10000000, $28  ;;  down
+  .byte $3e, $14, $00, $1e        ;;  left
+  .byte $3e, $14, %01000000, $32  ;;  right
 
-  .byte $45, $18, $00, $49  ;; select
-  .byte $45, $18, $00, $59  ;; start
+  .byte $45, $18, $00, $49        ;;  select
+  .byte $45, $18, $00, $59        ;;  start
 
 .segment "VECTORS"
     .word NMI
