@@ -1,5 +1,6 @@
-.PHONY : default
-default :
+DEPS := $(wildcard *.asm) $(wildcard *.chr) $(wildcard *.h) $(wildcard *.inc) $(wildcard *.nam)
+
+controller.nes : $(DEPS)
 	ca65 controller.asm -o controller.o --debug-info
 	ld65 controller.o -o controller.nes -t nes --dbgfile controller.dbg 
 
@@ -8,5 +9,5 @@ clean :
 	rm -rf controller.nes *.o
 
 .PHONY : run
-run : default
+run : controller.nes
 	fceux controller.nes
